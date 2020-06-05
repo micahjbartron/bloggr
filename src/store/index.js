@@ -8,14 +8,19 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     profile: {},
+    posts: [],
+    activePost: []
   },
   mutations: {
     setProfile(state, profile) {
       state.profile = profile;
     },
+    setPosts(state, data) {
+      state.posts = data
+    }
   },
   actions: {
-    setBearer({}, bearer) {
+    setBearer({ }, bearer) {
       api.defaults.headers.authorization = bearer;
     },
     resetBearer() {
@@ -29,5 +34,13 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
+    async getPosts({ commit, dispatch }) {
+      try {
+        let res = await api.get("blog")
+        commit("setPosts", res.data.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
   },
 });
