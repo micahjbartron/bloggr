@@ -8,15 +8,25 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     profile: {},
-    posts: [],
-    activePost: []
+    blogs: [],
+    activeBlog: [],
+    myBlogs: []
   },
   mutations: {
     setProfile(state, profile) {
       state.profile = profile;
     },
-    setPosts(state, data) {
-      state.posts = data
+    setMyBlogs(state, myBlogs) {
+      state.myBlogs = myBlogs
+    },
+    setBlogs(state, data) {
+      state.blogs = data
+    },
+    setActiveBlog(state, data) {
+      state.activeBlog = data
+    },
+    addBlogs(state, blog) {
+      state.blogs.push(blog)
     }
   },
   actions: {
@@ -34,13 +44,46 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async getPosts({ commit, dispatch }) {
+    async myBlogs() {
       try {
-        let res = await api.get("blog")
-        commit("setPosts", res.data.data)
+        let res = await api.get("profile/blogs")
+        this.commit("setMyBlogs", res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async getBlogs({ commit, dispatch }) {
+      try {
+        let res = await api.get("blogs")
+        commit("setBlogs", res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async getFullBlog({ commit, dispatch }, id) {
+      try {
+        let res = await api.get('blogs/' + id)
+        commit("setActiveBlog", res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async createBlogEntry({ commit, dispatch }, blog) {
+      try {
+        let res = await api.post('blogs', blog);
+        commit("addBlogs", res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async deleteBlogPost({ commit, dispatch }, id) {
+      try {
+        let res = await api.delete('blogs/' + id)
+        router.push({ name: "Home" })
       } catch (error) {
         console.error(error)
       }
     }
-  },
+
+  }
 });
