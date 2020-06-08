@@ -82,6 +82,7 @@ export default new Vuex.Store({
     },
     async createCommentEntry({ commit, dispatch }, comment) {
       try {
+        debugger
         let res = await api.post('comments', comment);
         commit("addComments", res.data)
       } catch (error) {
@@ -90,6 +91,7 @@ export default new Vuex.Store({
     },
     async deleteBlogPost({ commit, dispatch }, id) {
       try {
+
         let res = await api.delete('blogs/' + id)
         router.push({ name: "Home" })
       } catch (error) {
