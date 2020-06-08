@@ -3,7 +3,12 @@
     <h1>Welcome {{ profile.name }}</h1>
     <img class="rounded" :src="profile.picture" alt />
     <p>{{ profile.email }}</p>
-    <p>{{myBlogs}}</p>
+    <p></p>
+    <ul>
+      <li v-for="blog in myBlogs" :key="blog.id">
+        <router-link :to="{name:'Blog', params: {id: blog.id }}">TITLE-{{blog.title}}</router-link>
+      </li>
+    </ul>
   </div>
 </template>
 

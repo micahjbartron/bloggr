@@ -27,21 +27,13 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-9">
-        <ul>
-          <li v-for="blog in blogs" :key="blog.id">
-            <router-link
-              :to="{name:'Blog', params: {id: blog.id }}"
-            >TITLE-{{blog.title}} BLOG CREATOR-{{blog.creator.name}}</router-link>
-          </li>
-        </ul>
-      </div>
+      <blog v-for="blog in blogs" :key="blog.id" :blog="blog" />
     </div>
   </div>
 </template>
 
 <script>
-import Post from "@/components/PostComponent.vue";
+import Blog from "@/components/BlogComponent.vue";
 export default {
   name: "home",
   mounted() {
@@ -61,10 +53,13 @@ export default {
     }
   },
   methods: {
-    createBlogEntry() {
+    createBlogEntry(data) {
       this.$store.dispatch("createBlogEntry", { ...this.newBlogs });
       this.newBlogs = {};
     }
+  },
+  components: {
+    Blog
   }
 };
 </script>
