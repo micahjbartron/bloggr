@@ -87,18 +87,6 @@ export default {
     Comment
   }
 };
-
-// <div class="card">
-//           <div class="card-body shadow">
-//             <h5 class="card-title text-center">Comments</h5>
-//             <p
-//               class="card-text"
-//               v-for="comment in blog.comments"
-//               :key="comment.id"
-//             >{{comment.creator.name}} - {{comment.body}}</p>
-//  <button class="btn btn-outline-danger" v-if="isCreator">Delete</button>
-//           </div>
-// </div>
 </script>
 
 <style>
